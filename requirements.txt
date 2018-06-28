@@ -1,0 +1,7 @@
+pytest
+pylint
+scipy
+numpy
+pandas
+implicit
+lightfm
