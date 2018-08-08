@@ -10,3 +10,4 @@ recommendations for implicit feedback datasets.
 from .transform import Transformer
 from .validation import hold_out_entries, gridsearchCV, cross_val_folds
 from .preprocess import normalize_X
+from .postprocess import remove_subscribed_items
