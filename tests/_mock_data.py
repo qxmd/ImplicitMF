@@ -10,6 +10,16 @@ from scipy.sparse import rand
 import numpy as np
 
 # ---------------------------------------------------------------------
+# Sparse matrix
+# ---------------------------------------------------------------------
+
+def transformed_data():
+    Transformer user_item_dict 
+    sparse_matrix = rand(1000, 100, density=0.2, format='csr')
+    sparse_matrix.data[:] = 1
+    return sparse_matrix()
+
+# ---------------------------------------------------------------------
 # Transformer() input
 # ---------------------------------------------------------------------
 
