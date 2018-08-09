@@ -11,7 +11,7 @@ from scipy.sparse import issparse
 
 def _sparse_checker(X):
     if not issparse(X):
-        raise TypeError("Sparse array provided is not of type csr")
+        raise TypeError("X must be a sparse matrix of type csr.")
 
 def normalize_X(X, norm_type):
     """

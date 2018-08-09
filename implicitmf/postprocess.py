@@ -9,6 +9,10 @@ Operations to perform on recommendations output.
 from tqdm import tqdm
 import numpy as np
 
+def _dict_checker(input_dict):
+    if not isinstance(input_dict):
+        raise TypeError("Input must be a dictionary.")
+
 def remove_subscribed_items(rec_dict, user_sub_dict, unwanted_items=None):
     """
     Filters out already-subscribed collections from
@@ -29,6 +33,8 @@ def remove_subscribed_items(rec_dict, user_sub_dict, unwanted_items=None):
     dict
         dictionary with recommended items that users have not subscribed to
     """
+    _dict_checker(rec_dict)
+    _dict_checker(user_sub_dict)
     rec_set = set(rec_dict)
     user_sub_set = set(user_sub_dict)
 
