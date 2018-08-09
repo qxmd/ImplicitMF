@@ -1,0 +1,18 @@
+language: python
+python:
+  - "3.6"
+# command to install dependencies
+cache: pip3
+before_install:
+  - pip install pytest
+install:
+  - 'pip install -r requirements.txt'
+# command to run tests
+script:
+  - pytest
+  - pylint --errors-only --extension-pkg-whitelist=numpy implicitmf/
+os: "linux"
+dist: "trusty"
+notifications:
+    on_success: never
+    on_failure: never
