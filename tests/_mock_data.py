@@ -7,24 +7,18 @@ Mock data for unit tests
 """
 
 from scipy.sparse import rand
+from implicitmf.transform import Transformer
 import numpy as np
-
-# ---------------------------------------------------------------------
-# Sparse matrix
-# ---------------------------------------------------------------------
-
-def transformed_data():
-    sparse_matrix = rand(1000, 100, density=0.2, format='csr')
-    sparse_matrix.data[:] = 1
-    return sparse_matrix()
 
 # ---------------------------------------------------------------------
 # Transformer() input
 # ---------------------------------------------------------------------
 
 def gen_fetched_data():
-    """Function to generate inputs of Transformer
-    for basic unit testing"""
+    """
+    Function to generate inputs of Transformer
+    for basic unit testing
+    """
     distinct_users = np.array([111, 222, 333, 444, 555, 666, 777, 888])
     distinct_colls = np.array([201, 202, 203, 304, 305, 306])
     fetched_cs = np.array([(111, 201, 1), (333, 203, 1), (777, 306, 1)])
@@ -56,3 +50,18 @@ def gen_bad_coll_data():
         'item_id': np.array([1, 14])
     }
     return bad_user_dict
+
+
+# ---------------------------------------------------------------------
+# Sparse matrix
+# ---------------------------------------------------------------------
+
+def sparse_array():
+    """
+    Uses gen_fetched_data to transform into
+    a sparse array.
+    """
+    uc_dict, _ = gen_fetched_data()
+    transform = Transformer(uc_dict)
+    X = transform.to_sparse_array()
+    return X

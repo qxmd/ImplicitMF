@@ -41,5 +41,5 @@ def normalize_X(X, norm_type):
     elif norm_type == "tfidf":
         X = tfidf_weight(X)
     else:
-        raise ValueError("unknown norm_type parameter")
+        raise ValueError("Unknown norm_type parameter.")
     return X.tocsr()
