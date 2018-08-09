@@ -65,3 +65,31 @@ def sparse_array():
     transform = Transformer(uc_dict)
     X = transform.to_sparse_array()
     return X
+
+# ---------------------------------------------------------------------
+# Recommendations dictionary
+# ---------------------------------------------------------------------
+
+def recommendations_dict():
+    """
+    Creates a rec_dict with 100 users and 20
+    recommendations per user. Also generates a
+    user_sub_dict which samples from rec_dict users
+    and generates a new dictionary with 'already
+    subscribed' items.
+    """
+    rec_dict = dict()
+    user_ids = np.random.randint(1000,size=100)
+    rec_ids = np.random.randint(1000, size=(100,20))
+    scores = np.random.rand(100,20)
+    for i in user_ids:
+        rec_dict[i] = dict()
+        rec_dict[i]['recs'] = np.random.randint(1000, size=20)
+        rec_dict[i]['score'] = np.random.rand(20) 
+    # sample from rec_dict users and generate new dictionary
+    # with their "already subscribed" items
+    user_sub_keys = np.random.choice(list(rec_dict.keys()), replace=False, size=10)
+    user_sub_dict = {k: rec_dict[k] for k in user_sub_keys}
+    for k, v in user_sub_dict.items():
+        user_sub_dict[k] = np.random.choice(v['recs'], replace=False,size=3)
+    return rec_dict, user_sub_dict

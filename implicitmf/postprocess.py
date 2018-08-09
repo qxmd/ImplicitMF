@@ -10,7 +10,7 @@ from tqdm import tqdm
 import numpy as np
 
 def _dict_checker(input_dict):
-    if not isinstance(input_dict):
+    if not isinstance(input_dict, dict):
         raise TypeError("Input must be a dictionary.")
 
 def remove_subscribed_items(rec_dict, user_sub_dict, unwanted_items=None):
@@ -35,6 +35,11 @@ def remove_subscribed_items(rec_dict, user_sub_dict, unwanted_items=None):
     """
     _dict_checker(rec_dict)
     _dict_checker(user_sub_dict)
+
+    if unwanted_items is not None:
+        if not isinstance(unwanted_items, list):
+            raise TypeError("unwanted_items variable must be a list.")
+
     rec_set = set(rec_dict)
     user_sub_set = set(user_sub_dict)
 
