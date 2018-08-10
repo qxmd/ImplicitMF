@@ -1,6 +1,6 @@
 # ImplicitMF 
 
-[![Build Status](https://travis-ci.org/UBC-MDS/ImplicitMF.svg?branch=master)](https://travis-ci.org/UBC-MDS/ImplicitMF)
+[![Build Status](https://travis-ci.org/qxmd/ImplicitMF.svg?branch=master)](https://travis-ci.org/qxmd/ImplicitMF)
 
 ImplicitMF is a Python package that generates personalized recommendations for implicit feedback datasets. Unlike explicit feedback (e.g., movie ratings), implicit feedback looks at a user's interactions with an item and uses this as a surrogate measure of their preference toward that item. 
 
