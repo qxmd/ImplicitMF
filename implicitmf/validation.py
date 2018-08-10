@@ -10,16 +10,16 @@ import copy
 import numpy as np
 import pandas as pd
 from scipy.sparse import csr_matrix
+from implicitmf._utils import _sparse_checker
 from implicit.evaluation import precision_at_k
 
-
-def hold_out_entries(sparse_arr, hold_out_size=0.2, seed=None):
+def hold_out_entries(X, hold_out_size=0.2, seed=None):
     """
     Generates a sparse array of training examples by masking a random subset of values
 
     Parameters
     ----------
-    sparse_arr: csr_matrix
+    X: scipy.sparse.csr_matrix
         sparse array of all observed interactions
     hold_out_size: float
         proportion of entries to be masked 
@@ -29,13 +29,12 @@ def hold_out_entries(sparse_arr, hold_out_size=0.2, seed=None):
     Returns
     -------
     scipy.sparse.csr_matrix
-        sparse matrix of same shape as sparse_arr with hold_out_size proportion of entries masked
+        sparse matrix of same shape as X with hold_out_size proportion of entries masked
     """
-    if not isinstance(sparse_arr, csr_matrix):
-        raise TypeError("`sparse_arr` must be a scipy sparse csr matrix")
+    _sparse_checker(X)
 
     # compute the number of nonzero entries in sparse array
-    num_nonzero = sparse_arr.count_nonzero()
+    num_nonzero = X.count_nonzero()
 
     # set seed and randomly select some entries to be held out
     np.random.seed(seed)
@@ -45,23 +44,23 @@ def hold_out_entries(sparse_arr, hold_out_size=0.2, seed=None):
                                      replace=False)
 
     # get the indices of the nonzero components
-    ind_nonzero = sparse_arr.nonzero()
+    ind_nonzero = X.nonzero()
 
     # use randomly selected hold out values to pluck out corresponding indices
     indices_hold_out = (
         ind_nonzero[0][rand_hold_out], ind_nonzero[1][rand_hold_out])
-    sparse_arr[indices_hold_out] = 0
-    sparse_arr.eliminate_zeros()
-    return sparse_arr
+    X[indices_hold_out] = 0
+    X.eliminate_zeros()
+    return X
 
 
-def cross_val_folds(sparse_arr, num_folds, seed=None):
+def cross_val_folds(X, num_folds, seed=None):
     """
     Generates cross validation folds using provided data
 
     Parameters
     ----------
-    sparse_arr: csr_matrix
+    X: scipy.sparse.csr_matrix
         sparse array of all observed interactions
     num_folds: int
         number of folds to create
@@ -74,16 +73,14 @@ def cross_val_folds(sparse_arr, num_folds, seed=None):
         dictionary of length num_folds of the form
         {0: {'train': X_train, 'test': X_test}, 1: ...}
     """
-
-    if not isinstance(sparse_arr, csr_matrix):
-        raise TypeError("`sparse_arr` must be a scipy sparse csr matrix")
+    _sparse_checker(X)
 
     if not isinstance(num_folds, int) or num_folds < 2:
         raise TypeError("`num_folds` must be an int > 2")
 
     # compute the number of nonzero entries in sparse array
-    num_nonzero = sparse_arr.count_nonzero()
-    ind_nonzero = sparse_arr.nonzero()
+    num_nonzero = X.count_nonzero()
+    ind_nonzero = X.nonzero()
 
     # set seed and shuffle the indices of the nonzero entries
     np.random.seed(seed)
@@ -100,17 +97,17 @@ def cross_val_folds(sparse_arr, num_folds, seed=None):
         split_shuffled_ind[key] = shuffled_ind[start:stop]
         current = stop
 
-    # use the split shuffled indices to subset indices of nonzero entries from sparse_arr
+    # use the split shuffled indices to subset indices of nonzero entries from X
     val_indices = {key: (ind_nonzero[0][val], ind_nonzero[1][val])
                    for key, val in split_shuffled_ind.items()}
 
     folds = dict()
     for i in range(num_folds):
         print('Creating fold number {} ...'.format(i+1))
-        test = csr_matrix((np.array(sparse_arr[val_indices[i]]).reshape(-1),
-                           val_indices[i]), shape=sparse_arr.shape)
+        test = csr_matrix((np.array(X[val_indices[i]]).reshape(-1),
+                           val_indices[i]), shape=X.shape)
 
-        train = sparse_arr - test
+        train = X - test
         train.eliminate_zeros()
 
         folds[i] = {'train': train, 'test': test}
