@@ -74,7 +74,6 @@ def cross_val_folds(sparse_arr, num_folds, seed=None):
         dictionary of length num_folds of the form
         {0: {'train': X_train, 'test': X_test}, 1: ...}
     """
-
     if not isinstance(sparse_arr, csr_matrix):
         raise TypeError("`sparse_arr` must be a scipy sparse csr matrix")
 

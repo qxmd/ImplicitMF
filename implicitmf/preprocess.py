@@ -11,7 +11,7 @@ from scipy.sparse import issparse
 
 def _sparse_checker(X):
     if not issparse(X):
-        raise TypeError("Sparse array provided is not of type csr")
+        raise TypeError("X must be a sparse matrix of type csr.")
 
 def normalize_X(X, norm_type):
     """
@@ -41,5 +41,5 @@ def normalize_X(X, norm_type):
     elif norm_type == "tfidf":
         X = tfidf_weight(X)
     else:
-        raise ValueError("unknown norm_type parameter")
+        raise ValueError("Unknown norm_type parameter.")
     return X.tocsr()

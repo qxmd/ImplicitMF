@@ -41,7 +41,6 @@ class Transformer(object):
     >>> t = Transformer(uc_dict)
     >>> X = t.to_sparse_array(arr_type='csr_matrix')
     """
-
     def __init__(self, user_item_dict, full_matrix=True):
         if not isinstance(full_matrix, bool):
             raise ValueError("full_matrix parameter must be a boolean")
@@ -78,7 +77,6 @@ class Transformer(object):
         scipy.sparse_csr_matrix
             Scipy sparse array of desired type
         """
-
         supported_types = ['csr_matrix']
 
         if arr_type not in supported_types:
@@ -102,5 +100,4 @@ class Transformer(object):
             arr = csr_matrix((sparse_fill[:,2], (sparse_fill[:,0], sparse_fill[:,1])),
                              shape=(len(self.user_mapper),
                                     len(self.item_mapper)))
-
         return arr
