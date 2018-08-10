@@ -1,0 +1,282 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Transform &#8212; ImplicitMF 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to ImplicitMF’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="transform">
+<h1>Transform<a class="headerlink" href="#transform" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="implicitmf.transform.Transformer">
+<em class="property">class </em><code class="descclassname">implicitmf.transform.</code><code class="descname">Transformer</code><span class="sig-paren">(</span><em>user_item_dict</em>, <em>full_matrix=True</em><span class="sig-paren">)</span><a class="headerlink" href="#implicitmf.transform.Transformer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform fetched results into sparse matrix.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>item_sub_dict</strong> (<em>dict</em>) – a dictionary of lists of tuples containing distinct pairs of ids,
+distinct user ids, and distinct item ids</li>
+<li><strong>full_matrix</strong> (<em>boolean</em>) – Default is True. Determines whether matrix will be an
+“out matrix” or “in matrix”.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user_item_score</strong> (<em>list</em>) – list of tuples of length three, where first item in tuple is user_id
+second is item_id, third is score</li>
+<li><strong>user_mapper</strong> (<em>dict</em>) – keys are user_ids and values are indices along user axis in user item matrix</li>
+<li><strong>item_mapper</strong> (<em>dict</em>) – keys are item_ids and values are indices along item axis in user item matrix</li>
+<li><strong>user_inv_mapper</strong> (<em>dict</em>) – keys are indices along user axis in user item matrix and values are user_ids</li>
+<li><strong>item_inv_mapper</strong> (<em>dict</em>) – keys are indices along item axis in user item matrix and values are item_ids</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">implicitmf.transform</span> <span class="k">import</span> <span class="n">Transformer</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">uc_dict</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">gen_fetched_data</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">Transformer</span><span class="p">(</span><span class="n">uc_dict</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">to_sparse_array</span><span class="p">(</span><span class="n">arr_type</span><span class="o">=</span><span class="s1">&#39;csr_matrix&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="implicitmf.transform.Transformer.to_sparse_array">
+<code class="descname">to_sparse_array</code><span class="sig-paren">(</span><em>arr_type='csr_matrix'</em><span class="sig-paren">)</span><a class="headerlink" href="#implicitmf.transform.Transformer.to_sparse_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms provided data into scipy sparse array
+:param type: a string indicating type of sparse array returned (only supports csr_matrix)
+:type type: str</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Scipy sparse array of desired type</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">scipy.sparse_csr_matrix</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="pre-process">
+<h1>Pre-process<a class="headerlink" href="#pre-process" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="implicitmf.preprocess.normalize_X">
+<code class="descclassname">implicitmf.preprocess.</code><code class="descname">normalize_X</code><span class="sig-paren">(</span><em>X</em>, <em>norm_type</em><span class="sig-paren">)</span><a class="headerlink" href="#implicitmf.preprocess.normalize_X" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalizes the X matrix using either tfidf or bm25.
+Wrapper for Implicit’s tfidf_weight and bm25_weight
+evaluation functions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>X</strong> (<em>scipy.sparse.csr_matrix</em>) – sparse matrix of shape (n_users, n_collections)</li>
+<li><strong>norm_type</strong> (<em>string</em>) – can be either “bm25” or tfidf</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Normalized sparse csr matrix</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scipy.sparse.csr_matrix</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">References</p>
+<table class="docutils footnote" frame="void" id="id1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>bm25 and tfidf explanation:                                                    <a class="reference external" href="https://www.benfrederickson.com/distance-metrics/">https://www.benfrederickson.com/distance-metrics/</a></td></tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="validation">
+<h1>Validation<a class="headerlink" href="#validation" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="implicitmf.validation.cross_val_folds">
+<code class="descclassname">implicitmf.validation.</code><code class="descname">cross_val_folds</code><span class="sig-paren">(</span><em>sparse_arr</em>, <em>num_folds</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="headerlink" href="#implicitmf.validation.cross_val_folds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates cross validation folds using provided data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>sparse_arr</strong> (<em>csr_matrix</em>) – sparse array of all observed interactions</li>
+<li><strong>num_folds</strong> (<em>int</em>) – number of folds to create</li>
+<li><strong>seed</strong> (<em>int</em>) – random seed for use by np.random.choice</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dictionary of length num_folds of the form
+{0: {‘train’: X_train, ‘test’: X_test}, 1: …}</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="implicitmf.validation.gridsearchCV">
+<code class="descclassname">implicitmf.validation.</code><code class="descname">gridsearchCV</code><span class="sig-paren">(</span><em>base_model</em>, <em>X</em>, <em>n_folds</em>, <em>hyperparams</em><span class="sig-paren">)</span><a class="headerlink" href="#implicitmf.validation.gridsearchCV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs exhaustive gridsearch cross-validation to identify
+the best hyperparemters of a model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>base_model</strong> (<em>model object</em>) – </li>
+<li><strong>X</strong> (<em>scipy.sparse.csr_matrix</em>) – </li>
+<li><strong>n_folds</strong> (<em>int</em>) – number of folds for cross-validation</li>
+<li><strong>hyperparams</strong> (<em>dict</em>) – hyperparameter values of interest</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">pandas dataframe with mean_score, max_score, min_score for each combination of hyperparmeter values</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dataframe</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">References</p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>scikit-learn’s GridSearchCV: <a class="reference external" href="https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/model_selection/_search.py">https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/model_selection/_search.py</a></td></tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="post-process">
+<h1>Post-process<a class="headerlink" href="#post-process" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="implicitmf.postprocess.remove_subscribed_items">
+<code class="descclassname">implicitmf.postprocess.</code><code class="descname">remove_subscribed_items</code><span class="sig-paren">(</span><em>rec_dict</em>, <em>user_sub_dict</em>, <em>unwanted_items=None</em><span class="sig-paren">)</span><a class="headerlink" href="#implicitmf.postprocess.remove_subscribed_items" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filters out already-subscribed collections from
+recommendations list for each user.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>rec_dict</strong> (<em>dict</em>) – dictionary with user id as the key and list of recommended items as
+the value</li>
+<li><strong>user_sub_dict</strong> (<em>dict</em>) – dictionary with user id as the key and list of item subscriptions as the value</li>
+<li><strong>unwanted_items</strong> (<em>list</em>) – list of additional items to remove from the recommendation list</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dictionary with recommended items that users have not subscribed to</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Transform</a></li>
+<li><a class="reference internal" href="#pre-process">Pre-process</a></li>
+<li><a class="reference internal" href="#validation">Validation</a></li>
+<li><a class="reference internal" href="#post-process">Post-process</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to ImplicitMF’s documentation!</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/code.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, QxMD team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/code.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
