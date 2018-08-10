@@ -104,5 +104,4 @@ class Transformer(object):
             arr = csr_matrix((sparse_fill[:,2], (sparse_fill[:,0], sparse_fill[:,1])),
                              shape=(len(self.user_mapper),
                                     len(self.item_mapper)))
-
         return arr
