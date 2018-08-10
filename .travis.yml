@@ -7,10 +7,10 @@ before_install:
   - pip install pytest
 install:
   - 'pip install -r requirements.txt'
+  - 'pip install -e .'
 # command to run tests
 script:
   - pytest
-  - pylint --errors-only --extension-pkg-whitelist=numpy implicitmf/
 os: "linux"
 dist: "trusty"
 notifications:
