@@ -44,9 +44,9 @@ class Transformer(object):
 
     def __init__(self, user_item_dict, full_matrix=True):
         if not isinstance(full_matrix, bool):
-            raise ValueError("full_matrix parameter must be a boolean.")
+            raise TypeError("full_matrix parameter must be a boolean.")
         if not isinstance(user_item_dict, dict):
-            raise ValueError("user_item_dict parameter must be a dict.")
+            raise TypeError("user_item_dict parameter must be a dict.")
 
         self.user_item_score = user_item_dict['item_user_score']
         
