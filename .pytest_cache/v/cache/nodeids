@@ -1,0 +1,15 @@
+[
+  "tests/test_postprocess.py::test_remove_subscribed_items_output",
+  "tests/test_postprocess.py::test_remove_subscribed_items_dict_error",
+  "tests/test_postprocess.py::test_remove_subscribed_items_list_error",
+  "tests/test_preprocess.py::test_normalize_X_output",
+  "tests/test_preprocess.py::test_normalize_X_incorrect_sparse_matrix",
+  "tests/test_preprocess.py::test_normalize_X_incorrect_norm_type",
+  "tests/test_transform.py::test_transformer_shape",
+  "tests/test_transform.py::test_transformer_num_nonzero",
+  "tests/test_transform.py::test_transformer_loc_nonzero",
+  "tests/test_validation.py::test_hold_out_entries_type",
+  "tests/test_validation.py::test_hold_out_entires_shape",
+  "tests/test_validation.py::test_cross_val_folds_size",
+  "tests/test_validation.py::test_cross_val_folds_values"
+]
