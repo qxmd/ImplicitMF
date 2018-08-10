@@ -8,7 +8,7 @@ Welcome to ImplicitMF's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Developer Documentation:
 
    code.rst
 
