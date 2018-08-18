@@ -10,7 +10,10 @@ import copy
 import numpy as np
 import pandas as pd
 from scipy.sparse import csr_matrix
+from lightfm import LightFM, evaluation
+from implicit.als import AlternatingLeastSquares
 from implicit.evaluation import precision_at_k
+from implicit.cuda import HAS_CUDA
 from implicitmf.validation import cross_val_folds
 from implicitmf._utils import _sparse_checker
 
@@ -96,3 +99,26 @@ def gridsearchCV(base_model, X, n_folds, hyperparams):
     results['max_score'] = max_score
     results['min_score'] = min_score
     return results
+
+def smbo(X, obj, hyperparameters, n_threads, n_calls=100, n_jobs=1):
+    """
+    Performs sequential model-based optimization to
+    identify optimal hyperparameters.
+
+    Parameters
+    ----------
+    X : scipy.sparse.csr_matrix
+        utility matrix
+    obj : func
+        objective function that minimizes precision@k
+    hyperparamers : list
+        hyperparameter space
+    n_threads : int
+        number of threads to use in parallel
+
+    Returns
+    -------
+    dict
+        dictionary of optimal hyperparameters
+    """
+    pass

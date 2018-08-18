@@ -23,3 +23,9 @@ def test_gridsearchCV_output():
     }
     output = gridsearchCV(base_model=als, X=sparse_array(), n_folds=2, hyperparams=hyperparams)
     assert isinstance(output, pd.DataFrame)
+
+def test_objective_als_output():
+    """
+    Check that objective() returns
+    mean precision as a negative float.
+    """
