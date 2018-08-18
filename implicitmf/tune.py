@@ -50,7 +50,9 @@ def gridsearchCV(base_model, X, n_folds, hyperparams):
     Parameters
     ----------
     base_model : model object
+        base model
     X : scipy.sparse.csr_matrix
+        utility matrix
     n_folds : int
         number of folds for cross-validation
     hyperparams : dict
@@ -59,7 +61,7 @@ def gridsearchCV(base_model, X, n_folds, hyperparams):
     Returns
     -------
     pandas.DataFrame
-        dataframe with mean_score, max_score, min_score for each combination of hyperparmeter values
+        dataframe with ``mean_score``, ``max_score``, ``min_score`` for each combination of hyperparmeter values
 
     References
     ----------
@@ -112,7 +114,8 @@ def smbo(X, obj, hyperparameters, n_threads, n_calls=100, n_jobs=1):
     obj : func
         objective function that minimizes precision@k
     hyperparamers : list
-        hyperparameter space
+        list of tuples that specify (min, max, interval) of
+        each hyperparameter of interest
     n_threads : int
         number of threads to use in parallel
 
