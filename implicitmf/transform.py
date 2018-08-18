@@ -14,32 +14,35 @@ class Transformer(object):
 
     Parameters
     ----------
-    item_sub_dict: dict
+    item_sub_dict : dict
         a dictionary of lists of tuples containing distinct pairs of ids,
         distinct user ids, and distinct item ids
-    full_matrix: boolean
+    full_matrix : boolean
         Default is True. Determines whether matrix will be an 
         "out matrix" or "in matrix".
 
     Attributes
     ----------
-    user_item_score: list
+    user_item_score : list
         list of tuples of length three, where first item in tuple is user_id
         second is item_id, third is score
-    user_mapper: dict
+    user_mapper : dict
         keys are user_ids and values are indices along user axis in user item matrix
-    item_mapper: dict
+    item_mapper : dict
         keys are item_ids and values are indices along item axis in user item matrix
-    user_inv_mapper: dict
+    user_inv_mapper : dict
         keys are indices along user axis in user item matrix and values are user_ids
-    item_inv_mapper: dict
+    item_inv_mapper : dict
         keys are indices along item axis in user item matrix and values are item_ids
+    
     Examples
     --------
     >>> from implicitmf.transform import Transformer
-    >>> uc_dict, _ = gen_fetched_data()
-    >>> t = Transformer(uc_dict)
+    >>> user_item_dict, _ = gen_fetched_data()
+    >>> t = Transformer(user_item_dict)
     >>> X = t.to_sparse_array(arr_type='csr_matrix')
+    ... X.shape
+    (u, i) where u is the number of distinct users and i is the number of distinct items
     """
     def __init__(self, user_item_dict, full_matrix=True):
         if not isinstance(full_matrix, bool):
@@ -68,14 +71,17 @@ class Transformer(object):
     def to_sparse_array(self, arr_type='csr_matrix'):
         """
         Transforms provided data into scipy sparse array
+
         Parameters
         ----------
-        type: str
+        type : str
             a string indicating type of sparse array returned (only supports csr_matrix)
+
         Returns
         -------
-        scipy.sparse_csr_matrix
-            Scipy sparse array of desired type
+        scipy.sparse.csr_matrix
+            utility matrix of shape (u,i) where u represents number of distinct users and
+            i represents number of distinct items
         """
         supported_types = ['csr_matrix']
 

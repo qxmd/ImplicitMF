@@ -16,14 +16,14 @@ def _sparse_checker(X):
 def normalize_X(X, norm_type):
     """
     Normalizes the X matrix using either tfidf or bm25.
-    Wrapper for Implicit's tfidf_weight and bm25_weight
-    evaluation functions.
+    Wrapper for tfidf_weight and bm25_weight functions from
+    the :mod:`implicit:implicit.nearest_neighbours` module.
 
     Parameters
     ----------
-    X: scipy.sparse.csr_matrix
+    X : scipy.sparse.csr_matrix
         sparse matrix of shape (n_users, n_collections)
-    norm_type: string
+    norm_type : str
         can be either "bm25" or tfidf 
     
     Returns
@@ -34,6 +34,7 @@ def normalize_X(X, norm_type):
     References
     ----------
     .. [1] bm25 and tfidf explanation:                                                    https://www.benfrederickson.com/distance-metrics/
+    .. [2] https://github.com/benfred/implicit/blob/master/implicit/evaluation.pyx
     """
     _sparse_checker(X)
     if norm_type == "bm25":
