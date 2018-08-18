@@ -24,11 +24,16 @@ X_train against the original X matrix.
    :align: center
 
 
-:py:func:`implicitmf.validation.cross_val_folds` and :py:func:`implicitmf.validation.gridsearchCV`
+:py:func:`implicitmf.validation.cross_val_folds`
 both use the "masked-out" approach to split data.
 
 .. autofunction:: implicitmf.validation.cross_val_folds
-.. autofunction:: implicitmf.validation.gridsearchCV
+
+Tune
+====
+.. autofunction:: implicitmf.tune.gridsearchCV
+.. autofunction:: implicitmf.tune.smbo
+
 
 Post-process
 ============

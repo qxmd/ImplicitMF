@@ -30,8 +30,8 @@ def remove_subscribed_items(rec_dict, user_sub_dict, unwanted_items=None):
     dict
         dictionary with recommended items that users have not subscribed to
     """
-    _dict_checker(rec_dict)
-    _dict_checker(user_sub_dict)
+    _dict_checker(rec_dict, '`rec_dict`')
+    _dict_checker(user_sub_dict, '`user_sub_dict`')
 
     if unwanted_items is not None:
         if not isinstance(unwanted_items, list):

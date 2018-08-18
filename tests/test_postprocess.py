@@ -20,15 +20,26 @@ def test_remove_subscribed_items_output():
     output = remove_subscribed_items(rec_dict, user_sub_dict)
     assert isinstance(output, dict)
 
-def test_remove_subscribed_items_dict_error():
+def test_remove_subscribed_items_user_sub_dict_error():
     """
     Check that remove_subscribed_items() raises a
     TypeError if rec_dict/user_sub_dict is not a dict.
     """
     rec_dict, user_sub_dict = recommendations_dict() 
-    msg = "Input must be a dictionary"
+    msg = "`user_sub_dict` must be a dict"
     with pytest.raises(TypeError, match=msg):
         remove_subscribed_items(rec_dict, "testing 123")
+
+def test_remove_subscribed_items_rec_dict_error():
+    """
+    Check that remove_subscribed_items() raises a
+    TypeError if rec_dict/user_sub_dict is not a dict.
+    """
+    rec_dict, user_sub_dict = recommendations_dict() 
+    msg = "`rec_dict` must be a dict"
+    with pytest.raises(TypeError, match=msg):
+        remove_subscribed_items([1,2,3,4], user_sub_dict)
+
 
 def test_remove_subscribed_items_list_error():
     """
