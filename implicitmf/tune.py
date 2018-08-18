@@ -16,7 +16,7 @@ from implicit.als import AlternatingLeastSquares
 from implicit.evaluation import precision_at_k
 from implicit.cuda import HAS_CUDA
 from implicitmf.validation import cross_val_folds
-from implicitmf._utils import _sparse_checker
+from implicitmf._utils import _sparse_checker, _dict_checker
 from implicitmf.preprocess import normalize_X
 from implicitmf._utils import _sparse_checker
 
@@ -72,7 +72,7 @@ def gridsearchCV(base_model, X, n_folds, hyperparams):
     """
     _sparse_checker(X)
 
-    fold_dict = cross_val_folds(X, n_folds=n_folds)
+    folds = cross_val_folds(X, n_folds=n_folds)
 
     keys, values = zip(*hyperparams.items())
     p_total = []
@@ -89,8 +89,8 @@ def gridsearchCV(base_model, X, n_folds, hyperparams):
         print(' | '.join('{}: {}'.format(k, v) for (k, v) in print_line))
         precision = []
         for fold in np.arange(n_folds):
-            X_train = fold_dict[fold]['train']
-            X_test = fold_dict[fold]['test']
+            X_train = folds[fold]['train']
+            X_test = folds[fold]['test']
             p = _get_precision(this_model, X_train, X_test, K=10)
             precision.append(p)
         p_total.append(precision)
@@ -116,8 +116,8 @@ def smbo(X, obj, model, hyperparams, n_threads, n_calls=100, n_jobs=1):
         utility matrix
     obj : func
         objective function that minimizes precision@k
-    hyperparams : list
-        list of tuples that specify (min, max, interval) of
+    hyperparams : dict
+        dictionary that specify (min, max, interval) of
         each hyperparameter of interest
     n_threads : int
         number of threads to use in parallel
@@ -128,19 +128,26 @@ def smbo(X, obj, model, hyperparams, n_threads, n_calls=100, n_jobs=1):
         dictionary of optimal hyperparameters
     """
     _sparse_checker(X)
+    _dict_checker(hyperparams, '`hyperparams`')
+
     model_types = ['als', 'ltr']
     if model not in model_types:
         raise ValueError("`model` must be either 'ltr' or 'als'")
 
+    if model == 'ltr':
+        params = ['learning_rate', 'no_components', 'user_alpha', 'item_alpha']
+
+    if model == 'als':
+        params = ['regularization', 'factors']
+
+    if hyperparams.keys() not in params:
+        raise ValueError("`hyperparams` does not have the right keys")
+    
     X = normalize_X(X, norm_type="bm25")
     res = forest_minimize(
         func=obj, dimensions=hyperparams, n_calls=n_calls, verbose=True, n_jobs=n_jobs)
     print('Maximum p@k found: {:6.5f}'.format(-res.fun))
     print('Optimal parameters:')
-    if model == 'ltr':
-        params = ['learning_rate', 'no_components', 'user_alpha', 'item_alpha']
-    if model == 'als':
-        params = ['regularization', 'factors']
     for (p, x_) in zip(params, res.x):
         print('{}: {}'.format(p, x_))
     return dict(zip(params, res.x))

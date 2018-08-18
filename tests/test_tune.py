@@ -24,14 +24,15 @@ def test_gridsearchCV_output():
     output = gridsearchCV(base_model=als, X=sparse_array(), n_folds=2, hyperparams=hyperparams)
     assert isinstance(output, pd.DataFrame)
 
-def test_smbo_model_input_error():
+def test_smbo_hyperparam_error():
     """
     Check that objective() raises a ValueError
     is model parameter is not the correct format.
     """
-    msg = "`model` must be either 'ltr' or 'als'"
     def obj(hyperparams):
         pass
+    msg = "`model` must be either 'ltr' or 'als'"
     with pytest.raises(ValueError, match=msg):
+        hyperparams = {'regularization':(10**-4, 10**-1, 'log-uniform')}
         smbo(X=sparse_array(), obj=obj, model='test',
-        hyperparams=[(10**-4, 10**-1, 'log-uniform')], n_threads=10, n_calls=100, n_jobs=1)
+        hyperparams=hyperparams, n_threads=10, n_calls=100, n_jobs=1)
