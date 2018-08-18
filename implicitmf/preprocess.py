@@ -7,11 +7,7 @@ Operations to perform on a transformed matrix.
 """
 
 from implicit.nearest_neighbours import bm25_weight, tfidf_weight
-from scipy.sparse import issparse
-
-def _sparse_checker(X):
-    if not issparse(X):
-        raise TypeError("X must be a sparse matrix of type csr.")
+from implicitmf._utils import _sparse_checker
 
 def normalize_X(X, norm_type):
     """

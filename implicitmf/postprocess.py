@@ -8,10 +8,7 @@ Operations to perform on recommendations output.
 
 from tqdm import tqdm
 import numpy as np
-
-def _dict_checker(input_dict):
-    if not isinstance(input_dict, dict):
-        raise TypeError("Input must be a dictionary.")
+from implicitmf._utils import _dict_checker
 
 def remove_subscribed_items(rec_dict, user_sub_dict, unwanted_items=None):
     """

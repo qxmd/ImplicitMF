@@ -7,9 +7,10 @@ Unit tests for validation module
 
 import pytest
 import numpy as np
+import pandas as pd
 from scipy.sparse import csr_matrix, issparse
-
-from implicitmf.validation import hold_out_entries, cross_val_folds
+from implicitmf.validation import hold_out_entries, cross_val_folds, gridsearchCV
+from implicit.als import AlternatingLeastSquares
 from _mock_data import sparse_array
 
 def test_hold_out_entries_type():
@@ -46,3 +47,15 @@ def test_cross_val_folds_values():
     output = cross_val_folds(sparse_array(), 3)
     assert(issparse(output[0]['train']))
     assert(issparse(output[0]['test']))
+
+def test_gridsearchCV_output():
+    """
+    Check that output of gridsearchCV()
+    is a pandas dataframe.
+    """
+    als = AlternatingLeastSquares()
+    hyperparams = {
+        'regularization': [0.2,0.3]
+    }
+    output = gridsearchCV(base_model=als, X=sparse_array(), n_folds=2, hyperparams=hyperparams)
+    assert isinstance(output, pd.DataFrame)

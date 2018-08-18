@@ -10,8 +10,8 @@ import copy
 import numpy as np
 import pandas as pd
 from scipy.sparse import csr_matrix
+from implicitmf._utils import _sparse_checker
 from implicit.evaluation import precision_at_k
-
 
 def hold_out_entries(X, hold_out_size=0.2, seed=None):
     """
@@ -31,8 +31,7 @@ def hold_out_entries(X, hold_out_size=0.2, seed=None):
     scipy.sparse.csr_matrix
         sparse matrix of same shape as X with hold_out_size proportion of entries masked
     """
-    if not isinstance(X, csr_matrix):
-        raise TypeError("`X` must be a scipy sparse csr matrix")
+    _sparse_checker(X)
 
     # compute the number of nonzero entries in sparse array
     num_nonzero = X.count_nonzero()
