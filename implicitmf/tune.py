@@ -4,6 +4,7 @@
 Hyperparameter Tuning
 =====================
 """
+
 import itertools
 import copy
 
@@ -70,7 +71,7 @@ def gridsearchCV(base_model, X, n_folds, hyperparams):
     ----------
     .. [1] scikit-learn's GridSearchCV: https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/model_selection/_search.py
     """
-    _sparse_checker(X)
+    _sparse_checker(X, '`X`')
 
     folds = cross_val_folds(X, n_folds=n_folds)
 
@@ -127,7 +128,7 @@ def smbo(X, obj, model, hyperparams, n_threads, n_calls=100, n_jobs=1):
     dict
         dictionary of optimal hyperparameters
     """
-    _sparse_checker(X)
+    _sparse_checker(X, '`X`')
     _dict_checker(hyperparams, '`hyperparams`')
 
     model_types = ['als', 'ltr']

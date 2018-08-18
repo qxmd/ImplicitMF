@@ -47,6 +47,6 @@ def test_remove_subscribed_items_list_error():
     TypeError if unwanted_items is not a list.
     """
     rec_dict, user_sub_dict = recommendations_dict() 
-    msg = "unwanted_items variable must be a list"
+    msg = "`unwanted_items` must be a list"
     with pytest.raises(TypeError, match=msg):
         remove_subscribed_items(rec_dict, user_sub_dict, unwanted_items=42)

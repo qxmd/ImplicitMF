@@ -32,7 +32,7 @@ def normalize_X(X, norm_type):
     .. [1] bm25 and tfidf explanation: https://www.benfrederickson.com/distance-metrics/
     .. [2] https://github.com/benfred/implicit/blob/master/implicit/evaluation.pyx
     """
-    _sparse_checker(X)
+    _sparse_checker(X, '`X`')
     if norm_type == "bm25":
         X = bm25_weight(X, K1=100, B=0.8)
     elif norm_type == "tfidf":
