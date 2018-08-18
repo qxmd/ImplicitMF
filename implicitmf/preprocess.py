@@ -29,7 +29,7 @@ def normalize_X(X, norm_type):
 
     References
     ----------
-    .. [1] bm25 and tfidf explanation:                                                    https://www.benfrederickson.com/distance-metrics/
+    .. [1] bm25 and tfidf explanation: https://www.benfrederickson.com/distance-metrics/
     .. [2] https://github.com/benfred/implicit/blob/master/implicit/evaluation.pyx
     """
     _sparse_checker(X)
