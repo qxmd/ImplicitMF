@@ -3,6 +3,6 @@ pylint
 scipy
 numpy
 pandas
-skopt
+scikit-optimize
 implicit
 lightfm
