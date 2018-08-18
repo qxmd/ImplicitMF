@@ -17,12 +17,12 @@ def remove_subscribed_items(rec_dict, user_sub_dict, unwanted_items=None):
 
     Parameters
     ----------
-    rec_dict: dict
+    rec_dict : dict
         dictionary with user id as the key and list of recommended items as
         the value
-    user_sub_dict: dict
+    user_sub_dict : dict
         dictionary with user id as the key and list of item subscriptions as the value
-    unwanted_items: list
+    unwanted_items : list
         list of additional items to remove from the recommendation list
     
     Returns
