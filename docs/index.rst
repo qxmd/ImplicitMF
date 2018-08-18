@@ -6,6 +6,8 @@
 Welcome to ImplicitMF's documentation!
 ======================================
 
+|build-status|
+
 ImplicitMF is a Python package that generates personalized recommendations for implicit feedback datasets. Unlike explicit feedback (e.g., movie ratings), implicit feedback looks at a user's interactions with an item and uses this as a surrogate measure of their preference toward that item. 
 
 ImplicitMF provides a selection of implicit-specific matrix factorization techniques to generate item recommendations for a set of users:
@@ -20,9 +22,5 @@ ImplicitMF provides a selection of implicit-specific matrix factorization techni
    code.rst
 
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. |build-status| image:: https://travis-ci.org/qxmd/ImplicitMF.svg?branch=master
+    :alt: build status
