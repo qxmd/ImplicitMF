@@ -159,7 +159,7 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>item_sub_dict</strong> (<em>dict</em>) – a dictionary of lists of tuples containing distinct pairs of ids,
+<li><strong>item_sub_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – a dictionary of lists of tuples containing distinct pairs of ids,
 distinct user ids, and distinct item ids</li>
 <li><strong>full_matrix</strong> (<em>boolean</em>) – Default is True. Determines whether matrix will be an
 “out matrix” or “in matrix”.</li>
@@ -167,12 +167,12 @@ distinct user ids, and distinct item ids</li>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
-<li><strong>user_item_score</strong> (<em>list</em>) – list of tuples of length three, where first item in tuple is user_id
+<li><strong>user_item_score</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – list of tuples of length three, where first item in tuple is user_id
 second is item_id, third is score</li>
-<li><strong>user_mapper</strong> (<em>dict</em>) – keys are user_ids and values are indices along user axis in user item matrix</li>
-<li><strong>item_mapper</strong> (<em>dict</em>) – keys are item_ids and values are indices along item axis in user item matrix</li>
-<li><strong>user_inv_mapper</strong> (<em>dict</em>) – keys are indices along user axis in user item matrix and values are user_ids</li>
-<li><strong>item_inv_mapper</strong> (<em>dict</em>) – keys are indices along item axis in user item matrix and values are item_ids</li>
+<li><strong>user_mapper</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – keys are user_ids and values are indices along user axis in user item matrix</li>
+<li><strong>item_mapper</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – keys are item_ids and values are indices along item axis in user item matrix</li>
+<li><strong>user_inv_mapper</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – keys are indices along user axis in user item matrix and values are user_ids</li>
+<li><strong>item_inv_mapper</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – keys are indices along item axis in user item matrix and values are item_ids</li>
 </ul>
 </td>
 </tr>
@@ -180,24 +180,27 @@ second is item_id, third is score</li>
 </table>
 <p class="rubric">Examples</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">implicitmf.transform</span> <span class="k">import</span> <span class="n">Transformer</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">uc_dict</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">gen_fetched_data</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">Transformer</span><span class="p">(</span><span class="n">uc_dict</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user_item_dict</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">gen_fetched_data</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">Transformer</span><span class="p">(</span><span class="n">user_item_dict</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">to_sparse_array</span><span class="p">(</span><span class="n">arr_type</span><span class="o">=</span><span class="s1">&#39;csr_matrix&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(u, i) where u is the number of distinct users and i is the number of distinct items</span>
 </pre></div>
 </div>
 <dl class="method">
 <dt id="implicitmf.transform.Transformer.to_sparse_array">
 <code class="descname">to_sparse_array</code><span class="sig-paren">(</span><em>arr_type='csr_matrix'</em><span class="sig-paren">)</span><a class="headerlink" href="#implicitmf.transform.Transformer.to_sparse_array" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transforms provided data into scipy sparse array
-:param type: a string indicating type of sparse array returned (only supports csr_matrix)
-:type type: str</p>
+<dd><p>Transforms provided data into scipy sparse array</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Scipy sparse array of desired type</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – a string indicating type of sparse array returned (only supports csr_matrix)</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">scipy.sparse_csr_matrix</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">utility matrix of shape (u,i) where u represents number of distinct users and
+i represents number of distinct items</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.1.0)">scipy.sparse.csr_matrix</a></td>
 </tr>
 </tbody>
 </table>
@@ -212,22 +215,22 @@ second is item_id, third is score</li>
 <dt id="implicitmf.preprocess.normalize_X">
 <code class="descclassname">implicitmf.preprocess.</code><code class="descname">normalize_X</code><span class="sig-paren">(</span><em>X</em>, <em>norm_type</em><span class="sig-paren">)</span><a class="headerlink" href="#implicitmf.preprocess.normalize_X" title="Permalink to this definition">¶</a></dt>
 <dd><p>Normalizes the X matrix using either tfidf or bm25.
-Wrapper for Implicit’s tfidf_weight and bm25_weight
-evaluation functions.</p>
+Wrapper for tfidf_weight and bm25_weight functions from
+the <code class="xref py py-mod docutils literal notranslate"><span class="pre">implicit.nearest_neighbours</span></code> module.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>X</strong> (<em>scipy.sparse.csr_matrix</em>) – sparse matrix of shape (n_users, n_collections)</li>
-<li><strong>norm_type</strong> (<em>string</em>) – can be either “bm25” or tfidf</li>
+<li><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.1.0)"><em>scipy.sparse.csr_matrix</em></a>) – sparse matrix of shape (n_users, n_collections)</li>
+<li><strong>norm_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – can be either “bm25” or tfidf</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Normalized sparse csr matrix</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">scipy.sparse.csr_matrix</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.1.0)">scipy.sparse.csr_matrix</a></p>
 </td>
 </tr>
 </tbody>
@@ -237,6 +240,12 @@ evaluation functions.</p>
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[1]</td><td>bm25 and tfidf explanation:                                                    <a class="reference external" href="https://www.benfrederickson.com/distance-metrics/">https://www.benfrederickson.com/distance-metrics/</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td><a class="reference external" href="https://github.com/benfred/implicit/blob/master/implicit/evaluation.pyx">https://github.com/benfred/implicit/blob/master/implicit/evaluation.pyx</a></td></tr>
 </tbody>
 </table>
 </dd></dl>
@@ -251,62 +260,69 @@ in a training set and validation set of different dimensions. However, in recomm
 systems, we perform train_test_split by “masking” a proportion of user-collection interactions
 during the training phase then calculating precision&#64;k by comparing predicted recommendations on
 X_train against the original X matrix.</p>
-<a class="reference internal image-reference" href="_images/train_test_split_2x.png"><img alt="alternate text" class="align-center" src="_images/train_test_split_2x.png" style="width: 500px; height: 180px;" /></a>
+<a class="reference internal image-reference" href="imgs/train_test_split_2x.png"><img alt="alternate text" class="align-center" src="imgs/train_test_split_2x.png" style="width: 500px; height: 180px;" /></a>
 <p><a class="reference internal" href="#implicitmf.validation.cross_val_folds" title="implicitmf.validation.cross_val_folds"><code class="xref py py-func docutils literal notranslate"><span class="pre">implicitmf.validation.cross_val_folds()</span></code></a> and <a class="reference internal" href="#implicitmf.validation.gridsearchCV" title="implicitmf.validation.gridsearchCV"><code class="xref py py-func docutils literal notranslate"><span class="pre">implicitmf.validation.gridsearchCV()</span></code></a>
 both use the “masked-out” approach to split data.</p>
 <dl class="function">
 <dt id="implicitmf.validation.cross_val_folds">
-<code class="descclassname">implicitmf.validation.</code><code class="descname">cross_val_folds</code><span class="sig-paren">(</span><em>sparse_arr</em>, <em>num_folds</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="headerlink" href="#implicitmf.validation.cross_val_folds" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates cross validation folds using provided data</p>
+<code class="descclassname">implicitmf.validation.</code><code class="descname">cross_val_folds</code><span class="sig-paren">(</span><em>X</em>, <em>n_folds</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="headerlink" href="#implicitmf.validation.cross_val_folds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates cross validation folds using provided utility matrix</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>sparse_arr</strong> (<em>csr_matrix</em>) – sparse array of all observed interactions</li>
-<li><strong>num_folds</strong> (<em>int</em>) – number of folds to create</li>
-<li><strong>seed</strong> (<em>int</em>) – random seed for use by np.random.choice</li>
+<li><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.1.0)"><em>scipy.sparse.csr_matrix</em></a>) – utility matrix of shape (u, i) where u is number of users and i is number of items</li>
+<li><strong>n_folds</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – number of folds to create</li>
+<li><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – random seed for use by np.random.choice</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dictionary of length num_folds of the form
-{0: {‘train’: X_train, ‘test’: X_test}, 1: …}</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dictionary of length n_folds</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a></p>
 </td>
 </tr>
 </tbody>
 </table>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">output</span> <span class="o">=</span> <span class="n">cross_val_folds</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">n_folds</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="gp">... </span><span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+<span class="go">{0: {&#39;train&#39;: X_train, &#39;test&#39;: X_test},</span>
+<span class="go">1: {&#39;train&#39;: X_train, &#39;test&#39;: X_test}}</span>
+<span class="go">where X_train and X_test are of type scipy.sparse.csr_matrix</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="implicitmf.validation.gridsearchCV">
 <code class="descclassname">implicitmf.validation.</code><code class="descname">gridsearchCV</code><span class="sig-paren">(</span><em>base_model</em>, <em>X</em>, <em>n_folds</em>, <em>hyperparams</em><span class="sig-paren">)</span><a class="headerlink" href="#implicitmf.validation.gridsearchCV" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs exhaustive gridsearch cross-validation to identify
-the best hyperparemters of a model.</p>
+the optimal hyperparemters of a model.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>base_model</strong> (<em>model object</em>) – </li>
-<li><strong>X</strong> (<em>scipy.sparse.csr_matrix</em>) – </li>
-<li><strong>n_folds</strong> (<em>int</em>) – number of folds for cross-validation</li>
-<li><strong>hyperparams</strong> (<em>dict</em>) – hyperparameter values of interest</li>
+<li><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.1.0)"><em>scipy.sparse.csr_matrix</em></a>) – </li>
+<li><strong>n_folds</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – number of folds for cross-validation</li>
+<li><strong>hyperparams</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – hyperparameter values of interest</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">pandas dataframe with mean_score, max_score, min_score for each combination of hyperparmeter values</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dataframe with mean_score, max_score, min_score for each combination of hyperparmeter values</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dataframe</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)">pandas.DataFrame</a></p>
 </td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">References</p>
-<table class="docutils footnote" frame="void" id="id2" rules="none">
+<table class="docutils footnote" frame="void" id="id3" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[1]</td><td>scikit-learn’s GridSearchCV: <a class="reference external" href="https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/model_selection/_search.py">https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/model_selection/_search.py</a></td></tr>
@@ -327,17 +343,17 @@ recommendations list for each user.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>rec_dict</strong> (<em>dict</em>) – dictionary with user id as the key and list of recommended items as
+<li><strong>rec_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – dictionary with user id as the key and list of recommended items as
 the value</li>
-<li><strong>user_sub_dict</strong> (<em>dict</em>) – dictionary with user id as the key and list of item subscriptions as the value</li>
-<li><strong>unwanted_items</strong> (<em>list</em>) – list of additional items to remove from the recommendation list</li>
+<li><strong>user_sub_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – dictionary with user id as the key and list of item subscriptions as the value</li>
+<li><strong>unwanted_items</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – list of additional items to remove from the recommendation list</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dictionary with recommended items that users have not subscribed to</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a></p>
 </td>
 </tr>
 </tbody>
