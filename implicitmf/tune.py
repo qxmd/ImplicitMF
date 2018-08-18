@@ -11,10 +11,13 @@ import numpy as np
 import pandas as pd
 from scipy.sparse import csr_matrix
 from lightfm import LightFM, evaluation
+from skopt import forest_minimize
 from implicit.als import AlternatingLeastSquares
 from implicit.evaluation import precision_at_k
 from implicit.cuda import HAS_CUDA
 from implicitmf.validation import cross_val_folds
+from implicitmf._utils import _sparse_checker
+from implicitmf.preprocess import normalize_X
 from implicitmf._utils import _sparse_checker
 
 def _get_precision(model, X_train, X_test, K=10):
@@ -102,7 +105,7 @@ def gridsearchCV(base_model, X, n_folds, hyperparams):
     results['min_score'] = min_score
     return results
 
-def smbo(X, obj, hyperparameters, n_threads, n_calls=100, n_jobs=1):
+def smbo(X, obj, model, hyperparams, n_threads, n_calls=100, n_jobs=1):
     """
     Performs sequential model-based optimization to
     identify optimal hyperparameters.
@@ -113,7 +116,7 @@ def smbo(X, obj, hyperparameters, n_threads, n_calls=100, n_jobs=1):
         utility matrix
     obj : func
         objective function that minimizes precision@k
-    hyperparamers : list
+    hyperparams : list
         list of tuples that specify (min, max, interval) of
         each hyperparameter of interest
     n_threads : int
@@ -124,4 +127,20 @@ def smbo(X, obj, hyperparameters, n_threads, n_calls=100, n_jobs=1):
     dict
         dictionary of optimal hyperparameters
     """
-    pass
+    _sparse_checker(X)
+    model_types = ['als', 'ltr']
+    if model not in model_types:
+        raise ValueError("`model` must be either 'ltr' or 'als'")
+
+    X = normalize_X(X, norm_type="bm25")
+    res = forest_minimize(
+        func=obj, dimensions=hyperparams, n_calls=n_calls, verbose=True, n_jobs=n_jobs)
+    print('Maximum p@k found: {:6.5f}'.format(-res.fun))
+    print('Optimal parameters:')
+    if model == 'ltr':
+        params = ['learning_rate', 'no_components', 'user_alpha', 'item_alpha']
+    if model == 'als':
+        params = ['regularization', 'factors']
+    for (p, x_) in zip(params, res.x):
+        print('{}: {}'.format(p, x_))
+    return dict(zip(params, res.x))

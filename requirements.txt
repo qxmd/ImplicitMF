@@ -3,5 +3,6 @@ pylint
 scipy
 numpy
 pandas
+skopt
 implicit
 lightfm
