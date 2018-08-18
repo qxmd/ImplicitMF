@@ -46,9 +46,9 @@ class Transformer(object):
     """
     def __init__(self, user_item_dict, full_matrix=True):
         if not isinstance(full_matrix, bool):
-            raise TypeError("full_matrix parameter must be a boolean.")
+            raise TypeError("`full_matrix` must be a boolean")
         if not isinstance(user_item_dict, dict):
-            raise TypeError("user_item_dict parameter must be a dict.")
+            raise TypeError("`user_item_dict` must be a dict")
 
         self.user_item_score = user_item_dict['item_user_score']
         
@@ -88,7 +88,7 @@ class Transformer(object):
         supported_types = ['csr_matrix']
 
         if arr_type not in supported_types:
-            raise TypeError('That array type is not supprted')
+            raise TypeError("`arr_type` must be a csr_matrix")
 
         user_bool = np.isin(self.user_item_score[:,0], self.distinct_user_ids)
         item_bool = np.isin(self.user_item_score[:,1], self.distinct_item_ids)

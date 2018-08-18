@@ -27,7 +27,7 @@ def test_normalize_X_incorrect_sparse_matrix():
     Check that normalize_X() raises a
     TypeError if X is not the correct format.
     """
-    msg = "X must be a sparse matrix of type csr."
+    msg = "`X` must be a scipy.sparse.csr_matrix"
     with pytest.raises(TypeError, match=msg):
         normalize_X(X="hello", norm_type="bm25")
 
@@ -36,7 +36,7 @@ def test_normalize_X_incorrect_norm_type():
     Check that normalize_X() raises a ValueError
     if norm_type is not one of bm25 or tfidf.
     """
-    msg = "Unknown norm_type parameter."
+    msg = "Unknown `norm_type` parameter"
     with pytest.raises(ValueError, match=msg):
         normalize_X(X=sparse_array(), norm_type="bm2000")
 

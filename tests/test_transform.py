@@ -16,7 +16,7 @@ def test_transformer_input_dict_error():
     Check that Transformer raises a TypeError
     if full_matrix is not a dictionary.
     """
-    msg = "user_item_dict parameter must be a dict."
+    msg = "`user_item_dict` must be a dict"
     with pytest.raises(TypeError, match=msg):
         Transformer(user_item_dict="dict")
 
@@ -26,7 +26,7 @@ def test_transformer_input_bool_error():
     if full_matrix is not a boolean.
     """
     uc_dict, _ = gen_fetched_data()
-    msg = "full_matrix parameter must be a boolean."
+    msg = "`full_matrix` must be a boolean"
     with pytest.raises(TypeError, match=msg):
         Transformer(user_item_dict=uc_dict, full_matrix="bool")
 
