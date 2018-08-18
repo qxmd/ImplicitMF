@@ -239,7 +239,7 @@ the <code class="xref py py-mod docutils literal notranslate"><span class="pre">
 <table class="docutils footnote" frame="void" id="id1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[1]</td><td>bm25 and tfidf explanation:                                                    <a class="reference external" href="https://www.benfrederickson.com/distance-metrics/">https://www.benfrederickson.com/distance-metrics/</a></td></tr>
+<tr><td class="label">[1]</td><td>bm25 and tfidf explanation: <a class="reference external" href="https://www.benfrederickson.com/distance-metrics/">https://www.benfrederickson.com/distance-metrics/</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="id2" rules="none">
@@ -260,7 +260,7 @@ in a training set and validation set of different dimensions. However, in recomm
 systems, we perform train_test_split by “masking” a proportion of user-collection interactions
 during the training phase then calculating precision&#64;k by comparing predicted recommendations on
 X_train against the original X matrix.</p>
-<a class="reference internal image-reference" href="imgs/train_test_split_2x.png"><img alt="alternate text" class="align-center" src="imgs/train_test_split_2x.png" style="width: 500px; height: 180px;" /></a>
+<a class="reference internal image-reference" href="_images/train_test_split_2x.png"><img alt="alternate text" class="align-center" src="_images/train_test_split_2x.png" style="width: 500px; height: 180px;" /></a>
 <p><a class="reference internal" href="#implicitmf.validation.cross_val_folds" title="implicitmf.validation.cross_val_folds"><code class="xref py py-func docutils literal notranslate"><span class="pre">implicitmf.validation.cross_val_folds()</span></code></a> and <a class="reference internal" href="#implicitmf.validation.gridsearchCV" title="implicitmf.validation.gridsearchCV"><code class="xref py py-func docutils literal notranslate"><span class="pre">implicitmf.validation.gridsearchCV()</span></code></a>
 both use the “masked-out” approach to split data.</p>
 <dl class="function">
@@ -287,11 +287,11 @@ both use the “masked-out” approach to split data.</p>
 </tbody>
 </table>
 <p class="rubric">Example</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">output</span> <span class="o">=</span> <span class="n">cross_val_folds</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">n_folds</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">output</span> <span class="o">=</span> <span class="n">cross_val_folds</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">n_folds</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 <span class="gp">... </span><span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
 <span class="go">{0: {&#39;train&#39;: X_train, &#39;test&#39;: X_test},</span>
-<span class="go">1: {&#39;train&#39;: X_train, &#39;test&#39;: X_test}}</span>
-<span class="go">where X_train and X_test are of type scipy.sparse.csr_matrix</span>
+<span class="go">1: {&#39;train&#39;: X_train, &#39;test&#39;: X_test},</span>
+<span class="go">2: {&#39;train&#39;: X_train, &#39;test&#39;: X_test}}</span>
 </pre></div>
 </div>
 </dd></dl>
