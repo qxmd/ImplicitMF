@@ -16,7 +16,7 @@ from implicitmf._utils import _sparse_checker
 
 def get_X_rec(model, users, X, k, user_features=None, num_threads=1):
     """
-    Generate recomendations for a set of users as a sparse array.
+    Populates the user-item utility matrix with user recommendations.
     
     Parameters
     ----------
@@ -95,7 +95,7 @@ def precision_at_k(X_test, X_rec, k):
     _sparse_checker(X_rec, '`X_rec`')
 
     if X_test.shape != X_rec.shape:
-        raise TypeError('X_test must be the same shape as X_rec')
+        raise TypeError('`X_test` must be the same shape as `X_rec`')
     
     overlap = X_test.multiply(X_rec)
     overlap.eliminate_zeros()

@@ -49,7 +49,8 @@ def _get_precision(model, X_train, X_test, K=10):
 def gridsearchCV(base_model, X, n_folds, hyperparams):
     """
     Performs exhaustive gridsearch cross-validation to identify
-    the optimal hyperparemters of a model.
+    the optimal hyperparemters of a model using `precision@10`
+    as the evaluation metric.
 
     Parameters
     ----------
@@ -70,6 +71,10 @@ def gridsearchCV(base_model, X, n_folds, hyperparams):
     References
     ----------
     .. [1] scikit-learn's GridSearchCV: https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/model_selection/_search.py
+
+    Note
+    ----
+    Adapted from sklearn's GridSearchCV for non-sklearn models.
     """
     _sparse_checker(X, '`X`')
 
@@ -105,6 +110,52 @@ def gridsearchCV(base_model, X, n_folds, hyperparams):
     results['max_score'] = max_score
     results['min_score'] = min_score
     return results
+
+def _obj_als(hyperparams):
+    folds = cross_val_folds(X, num_folds=n_folds)
+    precision = []
+    for fold in np.arange(n_folds):
+        model = AlternatingLeastSquares(factors=hyperparams['regularization'],
+                                regularization=hyperparams['factors'],
+                                calculate_training_loss=True, use_gpu=HAS_CUDA)
+        X_train = folds[fold]['train']
+        X_test = folds[fold]['test']
+        print("Fitting model...")
+        model.fit(X_train.T)
+        print("Calculating p@k...")
+        recommendations = recommendations_sparse_array(model, np.arange(X.shape[0]), X_train, k=10, num_threads=n_threads)
+        p = precision_at_k(X_test, recommendations, k=10)
+        precision.append(p)
+    # get mean p@k across all folds
+    mean_precision = np.mean(precision)
+    print(mean_precision)
+    return -mean_precision
+
+def _obj_ltr(hyperparams):
+    """
+    Calculates p at k for LightFM's model
+    """
+    folds = cross_val_folds(X, n_folds=n_folds)
+    precision = []
+    for fold in np.arange(n_folds):
+        model = LightFM(loss='warp',
+                learning_rate=hyperparams['learning_rate'],
+                no_components=hyperparams['no_components'],
+                user_alpha=hyperparams['user_alpha'],
+                item_alpha=hyperparams['item_alpha'])
+        X_train = folds[fold]['train']
+        X_test = folds[fold]['test']
+        print("Fitting model...")
+        model.fit(X_train, epochs=10, num_threads=n_threads)
+        print("Calculating p@k...")
+        recommendations = recommendations_sparse_array(model, np.arange(X.shape[0]), X_train, k=10, num_threads=n_threads)
+        p = precision_at_k(X_test, recommendations, k=10)
+        precision.append(p)
+
+    # get mean p@k across all folds
+    mean_precision = np.mean(precision)
+    print(mean_precision)
+    return -mean_precision
 
 def smbo(X, obj, model, hyperparams, n_threads, n_calls=100, n_jobs=1):
     """
