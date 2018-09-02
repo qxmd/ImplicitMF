@@ -14,12 +14,9 @@ class Transformer(object):
 
     Parameters
     ----------
-    item_sub_dict : dict
+    user_item_dict : dict
         a dictionary of lists of tuples containing distinct pairs of ids,
         distinct user ids, and distinct item ids
-    full_matrix : boolean
-        Default is True. Determines whether matrix will be an 
-        "out matrix" or "in matrix".
 
     Attributes
     ----------
@@ -34,36 +31,14 @@ class Transformer(object):
         keys are indices along user axis in user item matrix and values are user_ids
     item_inv_mapper : dict
         keys are indices along item axis in user item matrix and values are item_ids
-    
-    Examples
-    --------
-    >>> from implicitmf.transform import Transformer
-    >>> user_item_dict, _ = gen_fetched_data()
-    >>> t = Transformer(user_item_dict)
-    >>> X = t.to_sparse_array(arr_type='csr_matrix')
-    ... X.shape
-    (u, i) where u is the number of distinct users and i is the number of distinct items
     """
-    def __init__(self, user_item_dict, full_matrix=True):
-        if not isinstance(full_matrix, bool):
-            raise TypeError("`full_matrix` must be a boolean")
+    def __init__(self, user_item_dict):
         if not isinstance(user_item_dict, dict):
             raise TypeError("`user_item_dict` must be a dict")
 
         self.user_item_score = user_item_dict['user_item_score']
-        
-        if full_matrix is True:
-            self.distinct_user_ids = user_item_dict['user_id']
-            self.distinct_item_ids = user_item_dict['item_id']
-        else:
-            self.distinct_user_ids = np.array(list(set(self.user_item_score[:,0]).intersection(user_item_dict['user_id'])))
-            self.distinct_item_ids = np.array(list(set(self.user_item_score[:,1]).intersection(user_item_dict['item_id'])))
-
-            diff_users =  len(user_item_dict['user_id']) - len(self.distinct_user_ids)
-            diff_items =  len(user_item_dict['item_id']) - len(self.distinct_item_ids)
-
-            print('{} users removed by `full_matrix` option'.format(diff_users))
-            print('{} items removed by `full_matrix` option'.format(diff_items))
+        self.distinct_user_ids = user_item_dict['user_id']
+        self.distinct_item_ids = user_item_dict['item_id']
 
         self.user_mapper = dict(zip(self.distinct_user_ids, range(len(self.distinct_user_ids))))
         self.item_mapper = dict(zip(self.distinct_item_ids, range(len(self.distinct_item_ids))))
