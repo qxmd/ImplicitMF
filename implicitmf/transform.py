@@ -50,7 +50,7 @@ class Transformer(object):
         if not isinstance(user_item_dict, dict):
             raise TypeError("`user_item_dict` must be a dict")
 
-        self.user_item_score = user_item_dict['item_user_score']
+        self.user_item_score = user_item_dict['user_item_score']
         
         if full_matrix is True:
             self.distinct_user_ids = user_item_dict['user_id']

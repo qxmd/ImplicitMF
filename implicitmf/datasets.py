@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import pandas as pd
+import numpy as np
 
 def movielens(type='df'):
     """
@@ -15,12 +16,14 @@ def movielens(type='df'):
     
     Returns
     -------
-    pd.DataFrame or np.ndarray
+    pd.DataFrame or np.array
         returns either dataframe or array of shape (n_ratings, 3)
     """
     path = "https://s3-us-west-2.amazonaws.com/implicitmf/movielens.csv"
     data = pd.read_csv(path)
     data = data.drop(columns=['timestamp'])
     data.columns = ['user_id', 'item_id', 'rating']
+    if type == 'array':
+        data = np.array(data)
     return data
 

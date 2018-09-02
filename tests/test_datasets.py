@@ -18,6 +18,8 @@ def test_movielens_output():
     """
     data = movielens(type='df')
     assert(isinstance(data, pd.DataFrame))
+    data = movielens(type='array')
+    assert(isinstance(data, np.array))
     
 def test_movielens_columns():
     """
