@@ -32,13 +32,26 @@ class Transformer(object):
     item_inv_mapper : dict
         keys are indices along item axis in user item matrix and values are item_ids
     """
-    def __init__(self, user_item_dict):
+    def __init__(self, user_item_dict, full_matrix=True):
+        if not isinstance(full_matrix, bool):
+            raise TypeError("`full_matrix` must be a boolean")
         if not isinstance(user_item_dict, dict):
             raise TypeError("`user_item_dict` must be a dict")
 
         self.user_item_score = user_item_dict['user_item_score']
-        self.distinct_user_ids = user_item_dict['user_id']
-        self.distinct_item_ids = user_item_dict['item_id']
+        
+        if full_matrix is True:
+            self.distinct_user_ids = user_item_dict['user_id']
+            self.distinct_item_ids = user_item_dict['item_id']
+        else:
+            self.distinct_user_ids = np.array(list(set(self.user_item_score[:,0]).intersection(user_item_dict['user_id'])))
+            self.distinct_item_ids = np.array(list(set(self.user_item_score[:,1]).intersection(user_item_dict['item_id'])))
+
+            diff_users =  len(user_item_dict['user_id']) - len(self.distinct_user_ids)
+            diff_items =  len(user_item_dict['item_id']) - len(self.distinct_item_ids)
+
+            print('{} users removed by `full_matrix` option'.format(diff_users))
+            print('{} items removed by `full_matrix` option'.format(diff_items))
 
         self.user_mapper = dict(zip(self.distinct_user_ids, range(len(self.distinct_user_ids))))
         self.item_mapper = dict(zip(self.distinct_item_ids, range(len(self.distinct_item_ids))))

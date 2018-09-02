@@ -13,7 +13,7 @@ from implicitmf._utils import _sparse_checker
 
 def dict_converter(ratings, unique_users=None, unique_items=None):
     """
-    Converts a pandas dataframe or np.ndarray into a dictionary
+    Converts a pd.DataFrame or np.ndarray into a dictionary
     that can be passed into the Transform class.
 
     Parameters
@@ -43,8 +43,8 @@ def dict_converter(ratings, unique_users=None, unique_items=None):
     if unique_items is None:
         unique_users = np.unique(ratings[:,1])
     user_item_score = [tuple(i) for i in ratings]  
-    user_item_dict['distinct_items'] = unique_items
-    user_item_dict['distinct_users'] = unique_users
+    user_item_dict['item_id'] = unique_items
+    user_item_dict['user_id'] = unique_users
     user_item_dict['user_item_score'] = user_item_score
     return user_item_dict
 

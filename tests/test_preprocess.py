@@ -20,9 +20,6 @@ def test_dict_converter_output():
     data = create_ratings_df()
     output = dict_converter(data)
     assert(isinstance(output, dict))
-    assert(isinstance(output['distinct_items'], list)
-    assert(isinstance(output['distinct_users'], list)
-    assert(isinstance(output['user_item_score'], list)
 
 def test_normalize_X_output():
     """

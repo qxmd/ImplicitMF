@@ -16,7 +16,7 @@ def movielens(type='df'):
     
     Returns
     -------
-    pd.DataFrame or np.array
+    pd.DataFrame or np.ndarray
         returns either dataframe or array of shape (n_ratings, 3)
     """
     path = "https://s3-us-west-2.amazonaws.com/implicitmf/movielens.csv"
@@ -24,6 +24,6 @@ def movielens(type='df'):
     data = data.drop(columns=['timestamp'])
     data.columns = ['user_id', 'item_id', 'rating']
     if type == 'array':
-        data = np.array(data)
+        data = data.values
     return data
 

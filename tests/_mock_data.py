@@ -42,8 +42,8 @@ def create_user_item_dict():
     distinct_users = np.array([111, 222, 333, 444, 555, 666, 777, 888])
     distinct_items = np.array([201, 202, 203, 304, 305, 306])
     user_item_score = np.array([(111, 201, 1), (333, 203, 1), (777, 306, 1)])
-    user_item_dict['distinct_users'] = distinct_users
-    user_item_dict['distinct_items'] = distinct_items
+    user_item_dict['item_id'] = distinct_users
+    user_item_dict['user_id'] = distinct_items
     user_item_dict['user_item_score'] = user_item_score
     return user_item_dict
 
@@ -54,11 +54,11 @@ def create_user_item_dict():
 
 def sparse_array():
     """
-    Uses gen_fetched_data to transform into
+    Uses create_user_item_dict() to transform into
     a sparse array.
     """
-    uc_dict, _ = gen_fetched_data()
-    transform = Transformer(uc_dict)
+    ui_dict = create_user_item_dict()
+    transform = Transformer(ui_dict)
     X = transform.to_sparse_array()
     return X
 

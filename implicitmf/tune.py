@@ -169,7 +169,7 @@ def smbo(X, obj, model, hyperparams, n_threads, n_calls=100, n_jobs=1):
     obj : func
         objective function that minimizes precision@k
     hyperparams : dict
-        dictionary that specify (min, max, interval) of
+        dictionary that specifies (min, max, interval) of
         each hyperparameter of interest
     n_threads : int
         number of threads to use in parallel
