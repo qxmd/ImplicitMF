@@ -8,9 +8,18 @@ Unit tests for pre-processing module
 import pytest
 import numpy as np
 from scipy.sparse import csr_matrix
-from implicitmf.preprocess import normalize_X
-from _mock_data import sparse_array
 
+from implicitmf.preprocess import normalize_X, dict_converter
+from _mock_data import sparse_array, create_ratings_df
+
+def test_dict_converter_output():
+    """
+    Check that output of dict_converter()
+    is the correct format.
+    """
+    data = create_ratings_df()
+    output = dict_converter(data)
+    assert(isinstance(output, dict))
 
 def test_normalize_X_output():
     """

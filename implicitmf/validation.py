@@ -27,7 +27,7 @@ def hold_out_entries(X, hold_out_size=0.2, seed=None):
     scipy.sparse.csr_matrix
         sparse matrix of same shape as X with hold_out_size proportion of entries masked
     """
-    _sparse_checker(X)
+    _sparse_checker(X, '`X`')
 
     # compute the number of nonzero entries in sparse array
     num_nonzero = X.count_nonzero()
@@ -75,7 +75,7 @@ def cross_val_folds(X, n_folds, seed=None):
     1: {'train': X_train, 'test': X_test},
     2: {'train': X_train, 'test': X_test}}
     """
-    _sparse_checker(X)
+    _sparse_checker(X, '`X`')
 
     if not isinstance(n_folds, int) or n_folds < 2:
         raise TypeError("`n_folds` must be an integer equal to or greater than 2")

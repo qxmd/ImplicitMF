@@ -35,7 +35,7 @@ def remove_subscribed_items(rec_dict, user_sub_dict, unwanted_items=None):
 
     if unwanted_items is not None:
         if not isinstance(unwanted_items, list):
-            raise TypeError("unwanted_items variable must be a list")
+            raise TypeError("`unwanted_items` must be a list")
 
     rec_set = set(rec_dict)
     user_sub_set = set(user_sub_dict)
