@@ -19,13 +19,13 @@ def test_movielens_output():
     data = movielens(type='df')
     assert(isinstance(data, pd.DataFrame))
     data = movielens(type='array')
-    assert(isinstance(data, np.array))
+    assert(isinstance(data, np.ndarray))
     
 def test_movielens_columns():
     """
     Check that movielens() returns a dataframe
     with the correct column values.
     """
-    movielens_columns = ['user_id', 'item_id', 'ratings']
+    movielens_columns = ['user_id', 'item_id', 'rating']
     data = movielens(type='df')
-    assert(data.columns.values == movielens_columns)
+    assert(sorted(data.columns.values) == sorted(movielens_columns))

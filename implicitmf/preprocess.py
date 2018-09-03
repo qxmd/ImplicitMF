@@ -35,7 +35,6 @@ def dict_converter(ratings, unique_users=None, unique_items=None):
     """
     if(ratings.shape[1] != 3):
         raise ValueError("ratings must have 3 columns")
-    user_item_dict = dict()
     if isinstance(ratings, pd.DataFrame):
         ratings = ratings.values
     if unique_users is None:
@@ -43,6 +42,7 @@ def dict_converter(ratings, unique_users=None, unique_items=None):
     if unique_items is None:
         unique_users = np.unique(ratings[:,1])
     user_item_score = [tuple(i) for i in ratings]  
+    user_item_dict = dict()
     user_item_dict['item_id'] = unique_items
     user_item_dict['user_id'] = unique_users
     user_item_dict['user_item_score'] = user_item_score
