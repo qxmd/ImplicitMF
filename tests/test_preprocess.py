@@ -21,6 +21,16 @@ def test_dict_converter_output():
     output = dict_converter(data)
     assert(isinstance(output, dict))
 
+def test_dict_converter_input_error():
+    """
+    Check that dict_converter() raises a
+    ValueError when input is not correct format.
+    """
+    data = create_ratings_df()
+    data['extra_column'] = data['ratings']*2
+    with pytest.raises(ValueError):
+        dict_converter(data)
+
 def test_normalize_X_output():
     """
     Check that output of normalize_X()

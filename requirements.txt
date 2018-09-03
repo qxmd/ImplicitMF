@@ -6,3 +6,4 @@ pandas
 scikit-optimize
 implicit
 lightfm
+tqdm
