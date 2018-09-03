@@ -14,21 +14,11 @@ from _mock_data import create_user_item_dict
 def test_transformer_input_dict_error():
     """
     Check that Transformer raises a TypeError
-    if full_matrix is not a dictionary.
+    if dict is incorrect format.
     """
     msg = "`user_item_dict` must be a dict"
     with pytest.raises(TypeError, match=msg):
         Transformer(user_item_dict="dict")
-
-def test_transformer_input_bool_error():
-    """
-    Check that Transformer raises a TypeError
-    if full_matrix is not a boolean.
-    """
-    ui_dict = create_user_item_dict()
-    msg = "`full_matrix` must be a boolean"
-    with pytest.raises(TypeError, match=msg):
-        Transformer(user_item_dict=ui_dict, full_matrix="bool")
 
 def test_transformer_attribute_type():
     """
