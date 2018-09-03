@@ -58,4 +58,4 @@ def test_transformer_num_nonzero():
     ui_dict = create_user_item_dict()
     t = Transformer(ui_dict)
     X = t.to_sparse_array()
-    assert X.getnnz() == len(ui_dict['user_item_score'])
+    assert(X.getnnz() == len(ui_dict['user_item_score']))

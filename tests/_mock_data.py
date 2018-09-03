@@ -41,11 +41,12 @@ def create_user_item_dict():
     distinct_users = np.array([111, 222, 333, 444, 555, 666, 777, 888])
     distinct_items = np.array([201, 202, 203, 304, 305, 306])
     user_item_score = np.array([(111, 201, 1), (333, 203, 1), (777, 306, 1)])
-    user_item_dict = dict()
-    user_item_dict['item_id'] = distinct_users
-    user_item_dict['user_id'] = distinct_items
-    user_item_dict['user_item_score'] = user_item_score
-    return user_item_dict
+    ui_dict = {
+        'user_item_score': user_item_score,
+        'user_id': distinct_users,
+        'item_id': distinct_items
+        }
+    return ui_dict
 
 
 # ---------------------------------------------------------------------
